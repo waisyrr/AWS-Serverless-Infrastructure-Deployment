@@ -2,3 +2,4 @@
 *.tfstate*
 .terraform.lock.hcl
 *.zip
+.DS_Store
