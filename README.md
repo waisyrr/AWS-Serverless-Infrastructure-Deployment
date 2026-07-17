@@ -1,4 +1,4 @@
-# 🚀 AWS Cloud Resume Challenge
+# 🚀 AWS Serverless Cloud Infrastructure
 
 > **Production-grade serverless cloud portfolio built on AWS using Terraform, GitHub Actions, and modern cloud engineering best practices.**
 
