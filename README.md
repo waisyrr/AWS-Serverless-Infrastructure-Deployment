@@ -6,7 +6,7 @@
 
 ---
 
-# ⚡ Understand This Project in 10 Seconds
+# ⚡ Understand The Project in 10 Seconds
 
 This project demonstrates the complete lifecycle of a modern AWS serverless application.
 

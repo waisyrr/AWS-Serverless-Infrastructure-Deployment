@@ -1,557 +1,706 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta  
-    name="description"
-    content="Uwais Watkins - IT portfolio showcasing AWS, Kubernetes, Terraform, Microsoft 365, Entra ID, Microsoft Graph API, Python automation, networking, cloud infrastructure, DevOps, GitOps, and systems administration projects."
-    >
-    <title>Uwais Watkins | IT Portfolio</title>
+    <meta name="description" content="Uwais Watkins builds documented cloud, infrastructure, networking, security, identity, and automation projects across AWS, Azure, Kubernetes, Terraform, Microsoft 365, and Python.">
+    <meta name="theme-color" content="#0b1220">
+    <title>Uwais Watkins | Cloud, Infrastructure &amp; Security Portfolio</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>document.documentElement.classList.add('js');</script>
     <style>
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.28s ease-in-out;
+        :root {
+            --ink: #0b1220;
+            --ink-soft: #475569;
+            --muted: #64748b;
+            --line: #dbe3ee;
+            --surface: #ffffff;
+            --surface-soft: #f5f7fb;
+            --navy: #0b1220;
+            --navy-soft: #15233b;
+            --blue: #145fd7;
+            --blue-dark: #0c49ab;
+            --blue-pale: #eaf2ff;
+            --green: #087f5b;
+            --green-pale: #e9f8f2;
+            --radius: 18px;
+            --shadow: 0 18px 50px rgba(15, 23, 42, 0.09);
+            --max: 1160px;
         }
-        .tab-content.active {
-            display: block;
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+        body {
+            margin: 0;
+            background: var(--surface-soft);
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+        a { color: inherit; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        :focus-visible { outline: 3px solid #77a7f3; outline-offset: 3px; }
+        .container { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+        .skip-link {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 100;
+            transform: translateY(-150%);
+            border-radius: 8px;
+            background: var(--surface);
+            padding: 10px 14px;
+            color: var(--ink);
+            font-weight: 800;
         }
-        .glass {
-            background: rgba(15, 23, 42, 0.72);
-            backdrop-filter: blur(16px);
+        .skip-link:focus { transform: translateY(0); }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(219, 227, 238, 0.9);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+        }
+        .header-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+        .brand { display: flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; white-space: nowrap; }
+        .brand-mark {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--navy);
+            color: white;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+        }
+        .brand-name { font-size: 15px; font-weight: 850; letter-spacing: -0.015em; }
+        .brand-role { display: block; margin-top: -3px; color: var(--muted); font-size: 11px; font-weight: 650; }
+        .nav-wrap { display: flex; align-items: center; gap: 22px; }
+        .nav-links { display: flex; align-items: center; gap: 6px; }
+        .nav-links a {
+            border-radius: 8px;
+            padding: 9px 10px;
+            color: var(--ink-soft);
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+            transition: color 160ms ease, background 160ms ease;
+        }
+        .nav-links a:hover { background: var(--surface-soft); color: var(--ink); }
+
+        .button {
+            display: inline-flex;
+            min-height: 46px;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            padding: 11px 17px;
+            font-size: 14px;
+            font-weight: 850;
+            line-height: 1.2;
+            text-decoration: none;
+            transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+        }
+        .button:hover { transform: translateY(-2px); }
+        .button-primary { background: var(--blue); color: white; box-shadow: 0 10px 24px rgba(20, 95, 215, 0.22); }
+        .button-primary:hover { background: var(--blue-dark); box-shadow: 0 13px 28px rgba(20, 95, 215, 0.28); }
+        .button-secondary { border-color: var(--line); background: var(--surface); color: var(--ink); }
+        .button-secondary:hover { border-color: #b8c5d6; background: #f8fafc; }
+        .button-dark { background: var(--navy); color: white; }
+        .button-dark:hover { background: #1b2a45; }
+        .button-compact { min-height: 40px; padding: 9px 14px; font-size: 13px; }
+        .text-link { color: var(--blue); font-weight: 850; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+        .text-link:hover { color: var(--blue-dark); }
+
+        .hero { padding: 50px 0 28px; }
+        .hero-shell {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(290px, 0.7fr);
+            gap: 48px;
+            align-items: center;
+            border-radius: 26px;
+            background: var(--navy);
+            padding: clamp(32px, 5vw, 64px);
+            color: white;
+            box-shadow: 0 26px 70px rgba(11, 18, 32, 0.16);
+        }
+        .hero-shell::after {
+            content: "";
+            position: absolute;
+            right: -140px;
+            bottom: -180px;
+            width: 430px;
+            height: 430px;
+            border: 1px solid rgba(101, 158, 249, 0.23);
+            border-radius: 50%;
+            box-shadow: 0 0 0 50px rgba(101, 158, 249, 0.04), 0 0 0 100px rgba(101, 158, 249, 0.03);
+            pointer-events: none;
+        }
+        .hero-copy, .proof-card { position: relative; z-index: 1; }
+        .availability { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 22px; color: #c8d9f5; font-size: 12px; font-weight: 800; letter-spacing: 0.02em; }
+        .availability-dot { width: 8px; height: 8px; border-radius: 50%; background: #44d7a8; box-shadow: 0 0 0 5px rgba(68, 215, 168, 0.11); }
+        h1 { max-width: 790px; margin: 0; font-size: clamp(38px, 5.6vw, 68px); line-height: 1.02; letter-spacing: -0.052em; }
+        .hero-lede { max-width: 720px; margin: 24px 0 0; color: #c5d0e1; font-size: clamp(17px, 1.7vw, 20px); line-height: 1.65; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+        .hero .button-secondary { border-color: rgba(255, 255, 255, 0.24); background: rgba(255, 255, 255, 0.06); color: white; }
+        .hero .button-secondary:hover { background: rgba(255, 255, 255, 0.12); }
+        .microcopy { margin: 15px 0 0; color: #91a2bc; font-size: 12px; }
+        .proof-card { border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; background: rgba(255, 255, 255, 0.06); padding: 24px; }
+        .proof-label { margin: 0 0 17px; color: #99bdf6; font-size: 11px; font-weight: 850; letter-spacing: 0.13em; text-transform: uppercase; }
+        .proof-list { display: grid; gap: 0; margin: 0; }
+        .proof-item { display: grid; grid-template-columns: 76px 1fr; gap: 14px; align-items: baseline; padding: 16px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .proof-item:first-child { padding-top: 0; border-top: 0; }
+        .proof-item:last-child { padding-bottom: 0; }
+        .proof-number { color: white; font-size: 29px; font-weight: 900; letter-spacing: -0.04em; }
+        .proof-text { color: #b8c5d8; font-size: 13px; line-height: 1.4; }
+
+        .trust-strip { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05); }
+        .trust-item { padding: 20px 24px; border-left: 1px solid var(--line); }
+        .trust-item:first-child { border-left: 0; }
+        .trust-kicker { margin: 0; color: var(--green); font-size: 11px; font-weight: 900; letter-spacing: 0.09em; text-transform: uppercase; }
+        .trust-value { margin: 5px 0 0; color: var(--ink); font-size: 14px; font-weight: 800; }
+
+        section { padding: 78px 0; }
+        .section-alt { border-block: 1px solid var(--line); background: var(--surface); }
+        .section-heading { display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(300px, 0.55fr); gap: 48px; align-items: end; margin-bottom: 34px; }
+        .eyebrow { margin: 0 0 10px; color: var(--blue); font-size: 11px; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; }
+        h2 { margin: 0; font-size: clamp(31px, 4vw, 46px); line-height: 1.09; letter-spacing: -0.04em; }
+        .section-intro { margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.75; }
+
+        .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+        .project-card { display: flex; min-width: 0; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 26px; box-shadow: 0 10px 32px rgba(15, 23, 42, 0.045); transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease; }
+        .project-card:hover { transform: translateY(-3px); border-color: #b8c8df; box-shadow: var(--shadow); }
+        .project-featured { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(255px, 0.52fr); gap: 38px; border-color: #bbd2f7; background: linear-gradient(135deg, #ffffff 0%, #f2f7ff 100%); padding: clamp(28px, 4vw, 42px); }
+        .project-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+        .project-type { color: var(--blue); font-size: 11px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+        .status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: var(--green-pale); padding: 5px 9px; color: var(--green); font-size: 10px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; }
+        .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+        .project-card h3 { margin: 0; font-size: clamp(21px, 2.4vw, 29px); line-height: 1.22; letter-spacing: -0.025em; }
+        .project-description { margin: 15px 0 0; color: var(--ink-soft); font-size: 14px; line-height: 1.75; }
+        .project-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 23px; }
+        .stack-details { margin-top: 18px; }
+        .stack-details summary { width: fit-content; cursor: pointer; color: var(--ink-soft); font-size: 12px; font-weight: 850; list-style-position: outside; }
+        .stack-details summary:hover { color: var(--blue); }
+        .tag-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+        .tag { border: 1px solid var(--line); border-radius: 999px; background: #f8fafc; padding: 5px 9px; color: #42526a; font-size: 10px; font-weight: 750; }
+        .featured-metrics { display: grid; align-content: center; gap: 10px; }
+        .metric { border: 1px solid #cadcf7; border-radius: 14px; background: rgba(255, 255, 255, 0.72); padding: 17px; }
+        .metric strong { display: block; color: var(--ink); font-size: 25px; line-height: 1; letter-spacing: -0.03em; }
+        .metric span { display: block; margin-top: 7px; color: var(--ink-soft); font-size: 11px; font-weight: 750; }
+
+        .capability-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+        .capability-card { border-top: 3px solid var(--blue); border-radius: 4px 4px 14px 14px; background: var(--surface-soft); padding: 22px; }
+        .capability-card h3 { margin: 0; font-size: 18px; letter-spacing: -0.02em; }
+        .capability-card p { margin: 10px 0 0; color: var(--ink-soft); font-size: 13px; line-height: 1.7; }
+
+        .architecture-shell { border-radius: 24px; background: var(--navy); padding: clamp(28px, 5vw, 50px); color: white; }
+        .architecture-shell .eyebrow { color: #8ab6fb; }
+        .architecture-shell h2 { max-width: 720px; }
+        .architecture-lede { max-width: 760px; margin: 18px 0 0; color: #b9c6d9; }
+        .flow-label { margin: 34px 0 12px; color: #8ab6fb; font-size: 11px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; }
+        .flow { display: flex; align-items: stretch; margin: 0; padding: 0; list-style: none; }
+        .flow li { position: relative; display: grid; flex: 1; min-height: 76px; place-items: center; border: 1px solid rgba(255, 255, 255, 0.14); border-left: 0; background: rgba(255, 255, 255, 0.055); padding: 13px 24px; text-align: center; font-size: 12px; font-weight: 800; }
+        .flow li:first-child { border-left: 1px solid rgba(255, 255, 255, 0.14); border-radius: 12px 0 0 12px; }
+        .flow li:last-child { border-radius: 0 12px 12px 0; }
+        .flow li:not(:last-child)::after { content: "›"; position: absolute; z-index: 2; right: -7px; top: 50%; color: #8ab6fb; font-size: 23px; transform: translateY(-53%); }
+        .counter-proof { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 18px; border: 1px solid rgba(92, 211, 168, 0.25); border-radius: 14px; background: rgba(55, 194, 143, 0.08); padding: 16px 18px; color: #bfe8d8; font-size: 13px; }
+        .counter-proof strong { color: white; }
+        .counter-number { white-space: nowrap; color: #6fe0b6; font-size: 20px; font-weight: 900; }
+        .architecture-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+        .architecture-card { border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; background: rgba(255, 255, 255, 0.045); padding: 20px; }
+        .architecture-card h3 { margin: 0; font-size: 15px; }
+        .architecture-card p { margin: 8px 0 0; color: #aebdd2; font-size: 12px; line-height: 1.7; }
+        .problem-details { margin-top: 14px; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 14px; background: rgba(255, 255, 255, 0.035); }
+        .problem-details summary { cursor: pointer; padding: 17px 20px; color: #dce7f8; font-size: 13px; font-weight: 850; }
+        .problem-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0 14px 14px; }
+        .problem { border-radius: 10px; background: rgba(0, 0, 0, 0.17); padding: 16px; }
+        .problem h4 { margin: 0; font-size: 13px; }
+        .problem p { margin: 7px 0 0; color: #aebdd2; font-size: 12px; }
+
+        .credentials-grid { display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 20px; }
+        .resume-panel, .cert-panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); padding: 28px; }
+        .resume-panel { display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(145deg, #eaf2ff, #ffffff); }
+        .resume-panel h3, .cert-panel h3 { margin: 0; font-size: 22px; letter-spacing: -0.025em; }
+        .resume-panel p, .cert-panel > p { margin: 10px 0 0; color: var(--ink-soft); font-size: 13px; }
+        .education { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 20px; }
+        .education-label { display: block; color: var(--blue); font-size: 10px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+        .education strong { display: block; margin-top: 5px; font-size: 14px; }
+        .resume-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+        .cert-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 24px; margin: 20px 0 0; padding: 0; list-style: none; }
+        .cert-list li { position: relative; padding-left: 19px; color: var(--ink-soft); font-size: 13px; line-height: 1.55; }
+        .cert-list li::before { content: ""; position: absolute; top: 0.62em; left: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+        .contact-panel { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(340px, 1fr); gap: 46px; align-items: center; border-radius: 24px; background: var(--blue); padding: clamp(30px, 5vw, 52px); color: white; }
+        .contact-panel .eyebrow { color: #d9e8ff; }
+        .contact-panel h2 { max-width: 560px; }
+        .contact-panel p { margin: 16px 0 0; color: #d9e8ff; }
+        .contact-links { display: grid; gap: 10px; }
+        .contact-link { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 14px; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 13px; background: rgba(255, 255, 255, 0.09); padding: 15px 17px; color: white; text-decoration: none; transition: background 160ms ease, transform 160ms ease; }
+        .contact-link:hover { transform: translateX(3px); background: rgba(255, 255, 255, 0.16); }
+        .contact-link span:first-child { color: #d9e8ff; font-size: 11px; font-weight: 850; letter-spacing: 0.09em; text-transform: uppercase; }
+        .contact-link strong { overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+        .contact-arrow { font-size: 19px; }
+
+        footer { border-top: 1px solid var(--line); background: var(--surface); }
+        .footer-inner { display: flex; min-height: 92px; align-items: center; justify-content: space-between; gap: 24px; color: var(--muted); font-size: 12px; }
+
+        .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 500ms ease, transform 500ms ease; }
+        .js .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 960px) {
+            .nav-links { display: none; }
+            .hero-shell, .section-heading, .project-featured, .credentials-grid, .contact-panel { grid-template-columns: 1fr; }
+            .proof-card { max-width: 620px; }
+            .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .featured-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .contact-panel { gap: 28px; }
+        }
+
+        @media (max-width: 700px) {
+            .container { width: min(calc(100% - 28px), var(--max)); }
+            .header-inner { min-height: 66px; }
+            .brand-role { display: none; }
+            .header-cta { min-height: 39px; padding: 9px 12px; font-size: 12px; }
+            .hero { padding-top: 24px; }
+            .hero-shell { gap: 30px; border-radius: 20px; padding: 28px 22px; }
+            h1 { font-size: clamp(36px, 12vw, 52px); }
+            .hero-lede { font-size: 16px; }
+            .hero-actions { display: grid; }
+            .trust-strip, .project-grid, .capability-grid, .architecture-grid, .problem-grid, .cert-list { grid-template-columns: 1fr; }
+            .trust-item { border-top: 1px solid var(--line); border-left: 0; }
+            .trust-item:first-child { border-top: 0; }
+            section { padding: 58px 0; }
+            .section-heading { gap: 16px; margin-bottom: 27px; }
+            .project-featured { grid-column: auto; }
+            .featured-metrics { grid-template-columns: 1fr; }
+            .flow { display: grid; }
+            .flow li, .flow li:first-child, .flow li:last-child { min-height: 56px; border: 1px solid rgba(255, 255, 255, 0.14); border-top: 0; border-radius: 0; }
+            .flow li:first-child { border-top: 1px solid rgba(255, 255, 255, 0.14); border-radius: 11px 11px 0 0; }
+            .flow li:last-child { border-radius: 0 0 11px 11px; }
+            .flow li:not(:last-child)::after { right: 50%; top: auto; bottom: -17px; transform: rotate(90deg) translateY(-50%); }
+            .counter-proof { align-items: flex-start; flex-direction: column; }
+            .footer-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding: 24px 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+            .js .reveal { opacity: 1; transform: none; }
         }
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Uwais Watkins",
+        "email": "mailto:uwatki1@gmail.com",
+        "url": "https://github.com/waisyrr/cloud-resume",
+        "sameAs": [
+            "https://www.linkedin.com/in/uwais-watkins/",
+            "https://github.com/waisyrr"
+        ],
+        "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Western Governors University"
+        },
+        "knowsAbout": ["AWS", "Microsoft Azure", "Kubernetes", "Terraform", "Microsoft 365", "Microsoft Entra ID", "Microsoft Graph API", "Python", "Networking", "Cybersecurity"]
+    }
+    </script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div class="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-3xl"></div>
-        <div class="absolute right-0 top-1/3 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-3xl"></div>
-    </div>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
 
-    <header class="sticky top-0 z-50 border-b border-white/10 glass">
-        <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-            <button onclick="switchTab('home')" class="group text-left" aria-label="Go to home section">
-                <p class="text-lg font-extrabold tracking-tight text-white">Uwais Watkins</p>
-                <p class="mt-1 inline-flex items-center gap-1.5 rounded-full border border-blue-400/20 bg-blue-500/10 px-2.5 py-1 text-xs font-semibold text-blue-200">
-                    <span class="relative flex h-1.5 w-1.5">
-                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
-                        <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-400"></span>
-                    </span>
-                    <span>Portfolio Views: <strong id="counter" class="font-black text-white">Loading...</strong></span>
-                </p>
-            </button>
-
-            <nav class="flex gap-2 overflow-x-auto pb-1 lg:pb-0" aria-label="Main navigation">
-                <button onclick="switchTab('home')" id="btn-home" class="nav-btn rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition">
-                    Home
-                </button>
-                <button onclick="switchTab('projects')" id="btn-projects" class="nav-btn rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">
-                    Projects
-                </button>
-                <button onclick="switchTab('architecture')" id="btn-architecture" class="nav-btn rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">
-                    Site Architecture
-                </button>
-                <button onclick="switchTab('resume')" id="btn-resume" class="nav-btn rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">
-                    Resume
-                </button>
-                <button onclick="switchTab('contact')" id="btn-contact" class="nav-btn rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">
-                    Contact
-                </button>
-            </nav>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#top" aria-label="Uwais Watkins, back to top">
+                <span class="brand-mark" aria-hidden="true">UW</span>
+                <span>
+                    <span class="brand-name">Uwais Watkins</span>
+                    <span class="brand-role"></span>
+                </span>
+            </a>
+            <div class="nav-wrap">
+                <nav class="nav-links" aria-label="Main navigation">
+                    <a href="#projects">Projects</a>
+                    <a href="#capabilities">Capabilities</a>
+                    <a href="#architecture">Architecture</a>
+                    <a href="#credentials">Credentials</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                <a class="button button-primary button-compact header-cta" href="Watkins Resume.pdf" download="Uwais_Watkins_Resume.pdf">Download résumé</a>
+            </div>
         </div>
     </header>
 
-    <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <section id="tab-home" class="tab-content active space-y-10">
-            <div class="grid gap-8 lg:grid-cols-[1.4fr_0.8fr] lg:items-center">
-                <div class="space-y-7">
-                    <div class="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-sm font-medium text-blue-200">
-                        <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-                        Available for IT, Cloud, Infrastructure, Networking, Security, and Systems Roles
-                    </div>
-
-                    <div class="space-y-5">
-<h1 class="max-w-4xl text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-5xl">
-                        Building real-world IT projects across cloud, infrastructure, networking and automation.
-                        </h1>
-                        <p class="max-w-2xl text-lg leading-8 text-slate-300">
-I build and document hands-on IT projects across Microsoft Azure, AWS, Kubernetes, Wazuh SIEM, Active Directory, Microsoft 365, Microsoft Entra ID, Microsoft Graph API, Infrastructure as Code with Terraform, GitOps, enterprise networking, Python automation, and serverless architecture.                        </p>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div class="flex flex-col gap-3 sm:flex-row">
-    <button
-        onclick="switchTab('projects')"
-        class="inline-flex items-center justify-center rounded-xl bg-blue-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-400">
-        View Projects
-    </button>
-
-    <a
-        href="Watkins Resume.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10">
-        View Resume
-    </a>
-
-</div>
-                    </div>
-                </div>
-
-                <aside class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-black/20">
-                    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">Portfolio Snapshot</p>
-                    <div class="mt-6 grid grid-cols-2 gap-4">
-                        <div class="rounded-2xl bg-slate-900/70 p-2 ring-1 ring-white/10">
-    <p class="text-2xl font-black text-white">AWS</p>
-    <p class="mt-1 text-sm text-slate-400">Cloud Infrastructure</p>
-</div>
-
-<div class="rounded-2xl bg-slate-900/70 p-2 ring-1 ring-white/10">
-    <p class="text-2xl font-black text-white">Terraform</p>
-    <p class="mt-1 text-sm text-slate-400">Infrastructure as Code</p>
-</div>
-
-<div class="rounded-2xl bg-slate-900/70 p-2 ring-1 ring-white/10">
-    <p class="text-2xl font-black text-white">Microsoft 365</p>
-    <p class="mt-1 text-sm text-slate-400">Entra ID & Graph API</p>
-</div>
-<div class="rounded-2xl bg-slate-900/70 p-2 ring-1 ring-white/10">
-
-    <p class="text-2xl font-black text-white">Kubernetes</p>
-
-    <p class="mt-1 text-sm text-slate-400">GitOps & DevOps</p>
-
-</div>
-<div class="rounded-2xl bg-slate-900/70 p-2 ring-1 ring-white/10">
-    <p class="text-2xl font-black text-white">Azure SOC</p>
-    <p class="mt-1 text-sm text-slate-400">SIEM &amp; SOAR</p>
-</div>
-
-                    </div>
-                    <div class="mt-5 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4 text-sm text-blue-100">
-                        <span class="font-bold">Live feature:</span> the visitor counter is powered by API Gateway, Lambda, and DynamoDB.
-                    </div>
-                </aside>
-            </div>
-
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-        <p class="text-sm font-bold text-emerald-300">Cloud</p>
-        <h2 class="mt-2 text-xl font-extrabold text-white">AWS Architecture</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-400">AWS cloud infrastructure using S3, CloudFront, Route 53, API Gateway, Lambda, DynamoDB, IAM, and Terraform.</p>
-    </div>
-
-    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-    <p class="text-sm font-bold text-emerald-300">Cybersecurity</p>
-
-    <h2 class="mt-2 text-xl font-extrabold text-white">
-        Azure SOC Operations
-    </h2>
-
-        <p class="mt-2 text-sm leading-6 text-slate-400">
-        Enterprise SOC built in Microsoft Azure featuring Active Directory, Wazuh SIEM, Shuffle SOAR, detection engineering, threat hunting, incident response, and Python automation.
-        </p>
-    </div>
-
-    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-        <p class="text-sm font-bold text-emerald-300">Identity</p>
-        <h2 class="mt-2 text-xl font-extrabold text-white">Microsoft 365 Administration</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-400">Microsoft Entra ID administration, Microsoft Graph API, user lifecycle management, security groups, OAuth 2.0, and identity automation.</p>
-    </div>
-
-    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-        <p class="text-sm font-bold text-emerald-300">DevOps</p>
-        <h2 class="mt-2 text-xl font-extrabold text-white">Kubernetes GitOps</h2>
-         <p class="mt-2 text-sm leading-6 text-slate-400">
-        Production-style Kubernetes platform featuring Terraform, Helm, Argo CD, RBAC, NetworkPolicies, Prometheus, and Grafana with automated GitOps deployment and observability.
-        </p>
-    </div>
-    </div>
-        </section>
-
-        <section id="tab-projects" class="tab-content space-y-7">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                    <p class="text-sm font-bold uppercase tracking-[0.2em] text-blue-300">PROJECTS</p>
-                    <h2 class="mt-2 text-3xl font-black tracking-tight text-white">Featured Projects</h2>
-                    <p class="mt-3 max-w-2xl text-slate-400"> Hands-on projects demonstrating cloud infrastructure, Kubernetes, DevOps, enterprise networking, Microsoft 365 administration, identity management, automation, and systems administration.</p>
-                </div>
-            </div>
-
-            <div class="grid gap-5 lg:grid-cols-2">
-                <article class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6 shadow-xl shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-2xl hover:border-emerald-400/40">
-    <div class="flex items-start justify-between gap-4">
-        <div>
-            <p class="text-sm font-bold text-emerald-300">Cloud</p>
-            <h3 class="mt-2 text-2xl font-black text-white">AWS Serverless Infrastructure Deployment</h3>
-        </div>
-        <span class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300">Complete</span>
-    </div>
-
-    <p class="mt-4 text-sm leading-7 text-slate-300">
-        Built and deployed a serverless AWS portfolio using Terraform Infrastructure as Code. Integrated Amazon S3, CloudFront, API Gateway, Lambda, and DynamoDB to deliver a secure, scalable web application with a live visitor counter.
-    </p>
-
-    <div class="mt-5 flex flex-wrap gap-2">
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">S3</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">CloudFront</span>
-        
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Lambda</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">DynamoDB</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Terraform</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">AWS</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Serverless</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">IAM</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">API Gateway</span>
-    </div>
-
-    <div class="mt-6 flex flex-wrap gap-3">
-    <button onclick="switchTab('architecture')" class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-emerald-50">
-        View Architecture
-    </button>
-    <a href="https://github.com/waisyrr/cloud-resume" target="_blank" rel="noopener noreferrer" class="inline-flex rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
-        View GitHub
-    </a>
-</div>
-</article>
-                <article class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6 shadow-xl shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-2xl hover:border-emerald-400/40">
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
-                            <p class="text-sm font-bold text-emerald-300">Networking</p>
-                            <h3 class="mt-2 text-2xl font-black text-white">Enterprise Secure Wireless Network Design</h3>
+    <main id="main">
+        <div id="top" class="hero">
+            <div class="container">
+                <div class="hero-shell">
+                    <div class="hero-copy">
+                        <p class="availability"><span class="availability-dot" aria-hidden="true"></span>Cloud • Infrastructure • Networking • Security • Automation</p>
+                        <h1>What I Build</h1>
+                        <p class="hero-lede">I build and document real-world cloud, infrastructure, networking, identity, security, and automation projects across AWS, Azure, Kubernetes, Terraform, Microsoft 365, Microsoft Entra ID, Microsoft Graph API, and Python.</p>
+                        <div class="hero-actions">
+                            <a class="button button-primary" href="#projects">Review featured work <span aria-hidden="true">↓</span></a>
+                            <a class="button button-secondary" href="Watkins Resume.pdf" target="_blank" rel="noopener noreferrer">View résumé</a>
                         </div>
-                        <span class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300">Complete</span>
+                        <p class="microcopy">Each project includes implementation details, technologies, and source documentation.</p>
                     </div>
-                    <p class="mt-4 text-sm leading-7 text-slate-300">
-                         Designed a secure enterprise wireless infrastructure implementing WPA3, VLAN segmentation, guest network isolation, enterprise access points, and network security best practices. Produced professional network architecture diagrams and deployment documentation.
-                    </p>
-                    <div class="mt-5 flex flex-wrap gap-2">
-                        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Networking</span>
-                        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">WPA3</span>
-                        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">VLANs</span>
-                        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Network Security</span>
-                        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Enterprise Wi-Fi</span>
-                        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Network Design</span>
-                
+                    <aside class="proof-card" aria-label="Portfolio proof points">
+                        <p class="proof-label">Evidence at a glance</p>
+                        <div class="proof-list">
+                            <div class="proof-item">
+                                <span class="proof-number">5</span>
+                                <span class="proof-text">completed, documented technical projects</span>
+                            </div>
+                            <div class="proof-item">
+                                <span class="proof-number">482</span>
+                                <span class="proof-text">security alerts processed in the Azure SOC lab</span>
+                            </div>
+                            <div class="proof-item">
+                                <span class="proof-number">9</span>
+                                <span class="proof-text">IT, cloud, security, Linux, and project certifications</span>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="trust-strip" aria-label="Professional summary">
+                    <div class="trust-item">
+                        <p class="trust-kicker">Education</p>
+                        <p class="trust-value">B.S. Information Technology · WGU</p>
                     </div>
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <a href="https://github.com/waisyrr/enterprise-wlan-design" target="_blank" rel="noopener noreferrer" class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-blue-50">
-                            View GitHub
-                        </a>
-                        <a href="https://github.com/waisyrr/enterprise-wlan-design/blob/main/docs/project-summary.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
-                            View Documentation
-                        </a>
+                    <div class="trust-item">
+                        <p class="trust-kicker">Delivery</p>
+                        <p class="trust-value">Infrastructure as Code · GitOps · CI/CD</p>
                     </div>
-                </article>
-
-                <article class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6 shadow-xl shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-2xl hover:border-emerald-400/40">
-    <div class="flex items-start justify-between gap-4">
-        <div>
-            <p class="text-sm font-bold text-emerald-300"> Enterprise Automation</p>
-            <h3 class="mt-2 text-2xl font-black text-white">Microsoft 365 / Entra ID Python Automation</h3>
-        </div>
-        <span class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300">Complete</span>
-    </div>
-
-    <p class="mt-4 text-sm leading-7 text-slate-300">
-        Enterprise Microsoft 365 / Microsoft Entra ID automation lab built with Python and the Microsoft Graph API to automate identity lifecycle management, including user provisioning, offboarding, security group management, bulk CSV automation, reporting, and audit logging.
-    </p>
-
-    <div class="mt-5 flex flex-wrap gap-2">
-    <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Microsoft 365</span>
-    <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Entra ID</span>
-    <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Microsoft Graph</span>
-    <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Python Automation</span>
-    <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">OAuth 2.0</span>
-    <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">REST API</span>
-    <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Identity Management</span>
-</div>
-
-    <div class="mt-6 flex flex-wrap gap-3">
-        <a href="https://github.com/waisyrr/m365-entra-python-automation-lab" target="_blank" rel="noopener noreferrer" class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-emerald-50">
-            View GitHub
-        </a>
-    </div>
-</article>
-<article class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6 shadow-xl shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-2xl hover:border-emerald-400/40">
-    <div class="flex items-start justify-between gap-4">
-        <div>
-            <p class="text-sm font-bold text-emerald-300">DevOps / Kubernetes</p>
-            <h3 class="mt-2 text-2xl font-black text-white">Kubernetes GitOps Infrastructure Lab</h3>
-        </div>
-        <span class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300">Complete</span>
-    </div>
-
-    <p class="mt-4 text-sm leading-7 text-slate-300">
-        Built a production-style Kubernetes platform using Terraform, KIND, Helm, Argo CD, Prometheus, and Grafana. Implemented GitOps continuous deployment, automated self-healing, RBAC, NetworkPolicies, Helm packaging, and live cluster monitoring.
-    </p>
-
-    
-
-    <div class="mt-5 flex flex-wrap gap-2">
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Kubernetes</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Terraform</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Helm</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Argo CD</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">GitOps</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Prometheus</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Grafana</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">RBAC</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">NetworkPolicy</span>
-    </div>
-
-    <div class="mt-6 flex flex-wrap gap-3">
-    <a href="https://github.com/waisyrr/kubernetes-gitops-infrastructure-lab"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-emerald-50">
-        View GitHub
-    </a>
-
-    <a href="https://github.com/waisyrr/kubernetes-gitops-infrastructure-lab#readme"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="inline-flex rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
-        View Documentation
-    </a>
-</div>
-</article>
-
-    <article class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6 shadow-xl shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-2xl hover:border-emerald-400/40">
-    <div class="flex items-start justify-between gap-4">
-        <div>
-            <p class="text-sm font-bold text-emerald-300">Cybersecurity / SOC Operations</p>
-            <h3 class="mt-2 text-2xl font-black text-white">
-                Enterprise Azure SOC: Wazuh SIEM, SOAR & Incident Response Lab
-            </h3>
+                    <div class="trust-item">
+                        <p class="trust-kicker">Documentation</p>
+                        <p class="trust-value">GitHub source · READMEs · Architecture</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <span class="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300">
-            Complete
-        </span>
-    </div>
-
-    <p class="mt-4 text-sm leading-7 text-slate-300">
-        Built a three-system enterprise SOC environment in Microsoft Azure integrating Active Directory, Wazuh SIEM, endpoint telemetry, detection engineering, threat hunting, Python reporting, and Shuffle SOAR. Processed 482 alerts, investigated authentication attacks, enriched incidents with threat intelligence, enforced analyst approval, executed controlled response actions, and validated results on the affected endpoint.
-    </p>
-
-    <div class="mt-5 flex flex-wrap gap-2">
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Microsoft Azure</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Wazuh SIEM</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Active Directory</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Shuffle SOAR</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Sysmon</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Python</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">PowerShell</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">MITRE ATT&CK</span>
-        <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200">Incident Response</span>
-    </div>
-
-    <div class="mt-6 flex flex-wrap gap-3">
-        <a
-            href="https://github.com/waisyrr/Enterprise-Azure-Wazuh-SIEM-SOAR-Security-Operations-Lab"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-emerald-50">
-            View GitHub
-        </a>
-
-        <a
-            href="https://github.com/waisyrr/Enterprise-Azure-Wazuh-SIEM-SOAR-Security-Operations-Lab#readme"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
-            View Documentation
-        </a>
-    </div>
-</article>
-            </div>
-        </section>
-
-        <section id="tab-architecture" class="tab-content space-y-8">
-            <div>
-                <p class="text-sm font-bold uppercase tracking-[0.2em] text-blue-300">How I Built This Site</p>
-                <h2 class="mt-2 text-3xl font-black tracking-tight text-white">Cloud Resume Challenge Architecture</h2>
-                <p class="mt-3 max-w-3xl text-slate-400">
-                    This portfolio is designed as a live technical project, not just a static resume page. The frontend is delivered through AWS, and the visitor counter uses a serverless backend.
-                </p>
-            </div>
-
-            <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl shadow-black/20">
-                <p class="text-sm font-bold text-blue-300">Request Flow</p>
-                <div class="mt-4 overflow-x-auto rounded-2xl border border-white/10 bg-slate-950 p-4 font-mono text-sm text-slate-200">
-                    Browser → CloudFront → S3 frontend<br class="sm:hidden">
-                    Browser → API Gateway → Lambda → DynamoDB → Lambda response → Browser update
-                </div>
-            </div>
-
-            <div class="grid gap-5 md:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                    <h3 class="text-lg font-extrabold text-white">Frontend Delivery</h3>
-                    <p class="mt-2 text-sm leading-6 text-slate-400">Static HTML, CSS, and JavaScript hosted in S3 and distributed globally with CloudFront. HTTPS and DNS are handled through the AWS edge and domain configuration.</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                    <h3 class="text-lg font-extrabold text-white">Serverless Counter</h3>
-                    <p class="mt-2 text-sm leading-6 text-slate-400">A JavaScript fetch request calls API Gateway. Lambda increments and returns the persistent count stored in DynamoDB.</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                    <h3 class="text-lg font-extrabold text-white">Infrastructure as Code</h3>
-                    <p class="mt-2 text-sm leading-6 text-slate-400">Terraform defines the infrastructure so the project is repeatable, documented, and easier to maintain than a manually configured cloud setup.</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-    <h3 class="text-lg font-extrabold text-white">CI/CD Pipeline</h3>
-    <p class="mt-2 text-sm leading-6 text-slate-400">
-        Automated deployments are handled with GitHub Actions. Every push to the main branch synchronizes the website to Amazon S3 and invalidates the CloudFront cache, ensuring updates are published automatically.
-    </p>
-</div>
-
-            <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-                <h3 class="text-xl font-black text-white">Problems Solved</h3>
-                <div class="mt-5 grid gap-4 lg:grid-cols-2">
-                    <div class="rounded-2xl bg-slate-950/70 p-4 ring-1 ring-white/10">
-                        <p class="font-bold text-white">Terraform provider file issue</p>
-                        <p class="mt-2 text-sm leading-6 text-slate-400">Cleaned up Git tracking after a large provider binary was added locally, then rebuilt the repository with better ignore rules.</p>
-                    </div>
-                    <div class="rounded-2xl bg-slate-950/70 p-4 ring-1 ring-white/10">
-                        <p class="font-bold text-white">Counter JSON parsing issue</p>
-                        <p class="mt-2 text-sm leading-6 text-slate-400">Fixed frontend response handling so the counter uses the parsed JSON object returned by the API.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-resume" class="tab-content space-y-7">
-            <div>
-                <p class="text-sm font-bold uppercase tracking-[0.2em] text-blue-300">Resume & Credentials</p>
-                <h2 class="mt-2 text-3xl font-black tracking-tight text-white">Resume</h2>
-                <p class="mt-3 max-w-2xl text-slate-400">Download the PDF resume or use the contact tab to connect through email, LinkedIn, or GitHub.</p>
-            </div>
-
-            <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-                <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <section id="projects">
+            <div class="container">
+                <div class="section-heading reveal">
                     <div>
-                        <h3 class="text-2xl font-black text-white">Uwais Watkins Resume</h3>
-                        <p class="mt-2 text-sm text-slate-400">Broad IT resume focused on cloud, systems administration, troubleshooting, and automation.</p>
+                        <p class="eyebrow">Selected work</p>
+                        <h2>Featured technical projects</h2>
                     </div>
-                    <div class="flex flex-col gap-3 sm:flex-row">
-    <a href="Watkins Resume.pdf"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="inline-flex justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10">
-        View Resume
-    </a>
-
-    <a href="Watkins Resume.pdf"
-       download="Uwais_Watkins_Resume.pdf"
-       class="inline-flex justify-center rounded-xl bg-blue-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-400">
-        Download PDF
-    </a>
-</div>
+                    <p class="section-intro">Five hands-on projects demonstrating cloud infrastructure, Kubernetes, DevOps, enterprise networking, Microsoft 365 administration, identity management, security operations, and automation.</p>
                 </div>
-            </div>
 
-            <div class="grid gap-5 md:grid-cols-2">
-                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                    <h3 class="text-lg font-extrabold text-white">Education</h3>
-                    <p class="mt-2 text-sm leading-6 text-slate-400">Bachelor's in Information Technology, Western Governors University.</p>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                    <h3 class="text-lg font-extrabold text-white">Certifications</h3>
-                    <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-400">
-                        <li>CompTIA Secure Infrastructure Specialist – CSIS Stackable Certification</li>
-                        <li>CompTIA IT Operations Specialist – CIOS Stackable Certification</li>
-                        <li>Axelos ITIL 4 Foundation Cert</li>
-                        <li>CompTIA A+</li>
-                        <li>Linux Essentials Certification</li>
-                        <li>CompTIA Network+</li>
-                        <li>AWS Certified Cloud Practitioner</li>
-                        <li>CompTIA Security+</li>
-                        <li>CompTIA Project+</li>
-                    </ul>
+                <div class="project-grid">
+                    <article class="project-card project-featured reveal">
+                        <div>
+                            <div class="project-meta">
+                                <span class="project-type">Cybersecurity · SOC operations</span>
+                                <span class="status">Complete</span>
+                            </div>
+                            <h3>Enterprise Azure SOC: Wazuh SIEM, SOAR &amp; Incident Response Lab</h3>
+                            <p class="project-description">Built a three-system enterprise SOC environment in Microsoft Azure integrating Active Directory, Wazuh SIEM, endpoint telemetry, detection engineering, threat hunting, Python reporting, and Shuffle SOAR. Processed 482 alerts, investigated authentication attacks, enriched incidents with threat intelligence, enforced analyst approval, executed controlled response actions, and validated results on the affected endpoint.</p>
+                            <details class="stack-details">
+                                <summary>View technology stack</summary>
+                                <div class="tag-list" aria-label="Azure SOC technologies">
+                                    <span class="tag">Microsoft Azure</span><span class="tag">Wazuh SIEM</span><span class="tag">Active Directory</span><span class="tag">Shuffle SOAR</span><span class="tag">Sysmon</span><span class="tag">Python</span><span class="tag">PowerShell</span><span class="tag">MITRE ATT&amp;CK</span><span class="tag">Incident Response</span>
+                                </div>
+                            </details>
+                            <div class="project-actions">
+                                <a class="button button-dark button-compact" href="https://github.com/waisyrr/Enterprise-Azure-Wazuh-SIEM-SOAR-Security-Operations-Lab" target="_blank" rel="noopener noreferrer">View GitHub</a>
+                                <a class="button button-secondary button-compact" href="https://github.com/waisyrr/Enterprise-Azure-Wazuh-SIEM-SOAR-Security-Operations-Lab#readme" target="_blank" rel="noopener noreferrer">Read documentation</a>
+                            </div>
+                        </div>
+                        <div class="featured-metrics" aria-label="Project outcomes">
+                            <div class="metric"><strong>482</strong><span>alerts processed</span></div>
+                            <div class="metric"><strong>3</strong><span>integrated Azure systems</span></div>
+                            <div class="metric"><strong>SIEM + SOAR</strong><span>detection through controlled response</span></div>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <div class="project-meta">
+                            <span class="project-type">Cloud</span>
+                            <span class="status">Complete</span>
+                        </div>
+                        <h3>AWS Serverless Infrastructure Deployment</h3>
+                        <p class="project-description">Built and deployed this serverless AWS portfolio using Terraform Infrastructure as Code. Integrated Amazon S3, CloudFront, API Gateway, Lambda, and DynamoDB to deliver a secure, scalable web application with a live visitor counter.</p>
+                        <details class="stack-details">
+                            <summary>View technology stack</summary>
+                            <div class="tag-list" aria-label="AWS project technologies">
+                                <span class="tag">S3</span><span class="tag">CloudFront</span><span class="tag">Lambda</span><span class="tag">DynamoDB</span><span class="tag">Terraform</span><span class="tag">AWS</span><span class="tag">Serverless</span><span class="tag">IAM</span><span class="tag">API Gateway</span>
+                            </div>
+                        </details>
+                        <div class="project-actions">
+                            <a class="button button-dark button-compact" href="https://github.com/waisyrr/cloud-resume" target="_blank" rel="noopener noreferrer">View GitHub</a>
+                            <a class="button button-secondary button-compact" href="#architecture">View architecture</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <div class="project-meta">
+                            <span class="project-type">DevOps · Kubernetes</span>
+                            <span class="status">Complete</span>
+                        </div>
+                        <h3>Kubernetes GitOps Infrastructure Lab</h3>
+                        <p class="project-description">Built a production-style Kubernetes platform using Terraform, KIND, Helm, Argo CD, Prometheus, and Grafana. Implemented GitOps continuous deployment, automated self-healing, RBAC, NetworkPolicies, Helm packaging, and live cluster monitoring.</p>
+                        <details class="stack-details">
+                            <summary>View technology stack</summary>
+                            <div class="tag-list" aria-label="Kubernetes project technologies">
+                                <span class="tag">Kubernetes</span><span class="tag">Terraform</span><span class="tag">Helm</span><span class="tag">Argo CD</span><span class="tag">GitOps</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">RBAC</span><span class="tag">NetworkPolicy</span>
+                            </div>
+                        </details>
+                        <div class="project-actions">
+                            <a class="button button-dark button-compact" href="https://github.com/waisyrr/kubernetes-gitops-infrastructure-lab" target="_blank" rel="noopener noreferrer">View GitHub</a>
+                            <a class="button button-secondary button-compact" href="https://github.com/waisyrr/kubernetes-gitops-infrastructure-lab#readme" target="_blank" rel="noopener noreferrer">Read documentation</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <div class="project-meta">
+                            <span class="project-type">Enterprise automation</span>
+                            <span class="status">Complete</span>
+                        </div>
+                        <h3>Microsoft 365 / Entra ID Python Automation</h3>
+                        <p class="project-description">Enterprise Microsoft 365 / Microsoft Entra ID automation lab built with Python and the Microsoft Graph API to automate identity lifecycle management, including user provisioning, offboarding, security group management, bulk CSV automation, reporting, and audit logging.</p>
+                        <details class="stack-details">
+                            <summary>View technology stack</summary>
+                            <div class="tag-list" aria-label="Microsoft automation technologies">
+                                <span class="tag">Microsoft 365</span><span class="tag">Entra ID</span><span class="tag">Microsoft Graph</span><span class="tag">Python Automation</span><span class="tag">OAuth 2.0</span><span class="tag">REST API</span><span class="tag">Identity Management</span>
+                            </div>
+                        </details>
+                        <div class="project-actions">
+                            <a class="button button-dark button-compact" href="https://github.com/waisyrr/m365-entra-python-automation-lab" target="_blank" rel="noopener noreferrer">View GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <div class="project-meta">
+                            <span class="project-type">Networking</span>
+                            <span class="status">Complete</span>
+                        </div>
+                        <h3>Enterprise Secure Wireless Network Design</h3>
+                        <p class="project-description">Designed a secure enterprise wireless infrastructure implementing WPA3, VLAN segmentation, guest network isolation, enterprise access points, and network security best practices. Produced professional network architecture diagrams and deployment documentation.</p>
+                        <details class="stack-details">
+                            <summary>View technology stack</summary>
+                            <div class="tag-list" aria-label="Network design technologies">
+                                <span class="tag">Networking</span><span class="tag">WPA3</span><span class="tag">VLANs</span><span class="tag">Network Security</span><span class="tag">Enterprise Wi-Fi</span><span class="tag">Network Design</span>
+                            </div>
+                        </details>
+                        <div class="project-actions">
+                            <a class="button button-dark button-compact" href="https://github.com/waisyrr/enterprise-wlan-design" target="_blank" rel="noopener noreferrer">View GitHub</a>
+                            <a class="button button-secondary button-compact" href="https://github.com/waisyrr/enterprise-wlan-design/blob/main/docs/project-summary.pdf" target="_blank" rel="noopener noreferrer">View documentation</a>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="tab-contact" class="tab-content space-y-7">
-            <div>
-                <p class="text-sm font-bold uppercase tracking-[0.2em] text-blue-300">Contact</p>
-                <h2 class="mt-2 text-3xl font-black tracking-tight text-white">Professional Links</h2>
-                <p class="mt-3 max-w-2xl text-slate-400">Use these links to contact me, review my code, or connect professionally.</p>
+        <section id="capabilities" class="section-alt">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="eyebrow">Capability map</p>
+                        <h2>Technical Capabilities</h2>
+                    </div>
+                    <p class="section-intro">The portfolio demonstrates hands-on experience across cloud infrastructure, systems administration, cybersecurity, and automation through documented, real-world projects.</p>
+                </div>
+                <div class="capability-grid">
+                    <article class="capability-card reveal">
+                        <h3>Cloud infrastructure</h3>
+                        <p>AWS architecture using S3, CloudFront, Route 53, API Gateway, Lambda, DynamoDB, IAM, and Terraform.</p>
+                    </article>
+                    <article class="capability-card reveal">
+                        <h3>Security operations</h3>
+                        <p>Azure SOC operations with Active Directory, Wazuh SIEM, Shuffle SOAR, detection engineering, threat hunting, incident response, and Python automation.</p>
+                    </article>
+                    <article class="capability-card reveal">
+                        <h3>Identity administration</h3>
+                        <p>Microsoft Entra ID, Microsoft Graph API, user lifecycle management, security groups, OAuth 2.0, and identity automation.</p>
+                    </article>
+                    <article class="capability-card reveal">
+                        <h3>Platform engineering</h3>
+                        <p>Kubernetes, Terraform, Helm, Argo CD, RBAC, NetworkPolicies, Prometheus, and Grafana with GitOps deployment and observability.</p>
+                    </article>
+                </div>
             </div>
+        </section>
 
-            <div class="grid gap-5 md:grid-cols-3">
-                <a href="mailto:uwatki1@gmail.com" class="rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition hover:border-blue-400/40 hover:bg-blue-500/10">
-                    <p class="text-sm font-bold text-blue-300">Email</p>
-                    <p class="mt-2 font-extrabold text-white">uwatki1@gmail.com</p>
-                </a>
-                <a href="https://www.linkedin.com/in/uwais-watkins/" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition hover:border-blue-400/40 hover:bg-blue-500/10">
-                    <p class="text-sm font-bold text-blue-300">LinkedIn</p>
-                    <p class="mt-2 font-extrabold text-white">linkedin.com/in/uwais-watkins</p>
-                </a>
-                <a href="https://github.com/waisyrr" target="_blank" rel="noopener noreferrer" class="rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition hover:border-blue-400/40 hover:bg-blue-500/10">
-                    <p class="text-sm font-bold text-blue-300">GitHub</p>
-                    <p class="mt-2 font-extrabold text-white">github.com/waisyrr</p>
-                </a>
+        <section id="architecture">
+            <div class="container">
+                <div class="architecture-shell reveal">
+                    <p class="eyebrow">Live technical proof</p>
+                    <h2>This website is a live AWS project.</h2>
+                    <p class="architecture-lede">The frontend is delivered through AWS, while a serverless backend increments and returns the persistent visitor count. Terraform makes the infrastructure repeatable, and GitHub Actions automates deployment.</p>
+
+                    <p class="flow-label">Frontend request</p>
+                    <ol class="flow" aria-label="Frontend delivery request flow">
+                        <li>Browser</li><li>CloudFront</li><li>S3 frontend</li>
+                    </ol>
+
+                    <p class="flow-label">Counter request</p>
+                    <ol class="flow" aria-label="Visitor counter request flow">
+                        <li>Browser</li><li>API Gateway</li><li>Lambda</li><li>DynamoDB</li><li>Browser update</li>
+                    </ol>
+
+                    <div class="counter-proof" aria-live="polite">
+                        <span><strong>Live validation:</strong> this count is returned by API Gateway, Lambda, and DynamoDB.</span>
+                        <span class="counter-number">Visitor #<span id="counter">Loading…</span></span>
+                    </div>
+
+                    <div class="architecture-grid">
+                        <article class="architecture-card">
+                            <h3>Frontend delivery</h3>
+                            <p>Static HTML, CSS, and JavaScript hosted in S3 and distributed globally with CloudFront. HTTPS and DNS are handled through the AWS edge and domain configuration.</p>
+                        </article>
+                        <article class="architecture-card">
+                            <h3>Serverless counter</h3>
+                            <p>A JavaScript fetch request calls API Gateway. Lambda increments and returns the persistent count stored in DynamoDB.</p>
+                        </article>
+                        <article class="architecture-card">
+                            <h3>Infrastructure as Code</h3>
+                            <p>Terraform defines the infrastructure so the project is repeatable, documented, and easier to maintain than a manually configured cloud setup.</p>
+                        </article>
+                        <article class="architecture-card">
+                            <h3>CI/CD pipeline</h3>
+                            <p>GitHub Actions synchronizes the website to Amazon S3 and invalidates the CloudFront cache after every push to the main branch.</p>
+                        </article>
+                    </div>
+
+                    <details class="problem-details">
+                        <summary>See two implementation problems I solved</summary>
+                        <div class="problem-grid">
+                            <article class="problem">
+                                <h4>Terraform provider file issue</h4>
+                                <p>Cleaned up Git tracking after a large provider binary was added locally, then rebuilt the repository with better ignore rules.</p>
+                            </article>
+                            <article class="problem">
+                                <h4>Counter JSON parsing issue</h4>
+                                <p>Fixed frontend response handling so the counter uses the parsed JSON object returned by the API.</p>
+                            </article>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="credentials" class="section-alt">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <div>
+                        <p class="eyebrow">Resume &amp; credentials</p>
+                        <h2>Experience Backed by Credentials</h2>
+                    </div>
+                    <p class="section-intro">Education, certifications, and hands-on projects provide a complete picture of my technical background.</p>
+                </div>
+                <div class="credentials-grid">
+                    <article class="resume-panel reveal">
+                        <div>
+                            <h3>Uwais Watkins résumé</h3>
+                            <p>IT résumé highlighting practical experience gained through hands-on projects in cloud, systems administration, troubleshooting, and automation.</p>
+                            <div class="education">
+                                <span class="education-label">Education</span>
+                                <strong>Bachelor's in Information Technology</strong>
+                                <span>Western Governors University</span>
+                            </div>
+                        </div>
+                        <div class="resume-actions">
+                            <a class="button button-primary button-compact" href="Watkins Resume.pdf" download="Uwais_Watkins_Resume.pdf">Download PDF</a>
+                            <a class="button button-secondary button-compact" href="Watkins Resume.pdf" target="_blank" rel="noopener noreferrer">View résumé</a>
+                        </div>
+                    </article>
+                    <article class="cert-panel reveal">
+                        <h3>Certifications</h3>
+                        <p>Nine credentials spanning IT operations, infrastructure, cloud, security, Linux, service management, and project delivery.</p>
+                        <ul class="cert-list">
+                            <li>CompTIA Secure Infrastructure Specialist – CSIS Stackable Certification</li>
+                            <li>CompTIA IT Operations Specialist – CIOS Stackable Certification</li>
+                            <li>Axelos ITIL 4 Foundation Cert</li>
+                            <li>CompTIA A+</li>
+                            <li>Linux Essentials Certification</li>
+                            <li>CompTIA Network+</li>
+                            <li>AWS Certified Cloud Practitioner</li>
+                            <li>CompTIA Security+</li>
+                            <li>CompTIA Project+</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <div class="contact-panel reveal">
+                    <div>
+                        <p class="eyebrow">Contact</p>
+                        <h2>Lets Connect.</h2>
+                        <p>Email me, connect on LinkedIn, or review the full source history on GitHub.</p>
+                    </div>
+                    <div class="contact-links">
+                        <a class="contact-link" href="mailto:uwatki1@gmail.com">
+                            <span>Email</span><strong>uwatki1@gmail.com</strong><span class="contact-arrow" aria-hidden="true">→</span>
+                        </a>
+                        <a class="contact-link" href="https://www.linkedin.com/in/uwais-watkins/" target="_blank" rel="noopener noreferrer">
+                            <span>LinkedIn</span><strong>linkedin.com/in/uwais-watkins</strong><span class="contact-arrow" aria-hidden="true">→</span>
+                        </a>
+                        <a class="contact-link" href="https://github.com/waisyrr" target="_blank" rel="noopener noreferrer">
+                            <span>GitHub</span><strong>github.com/waisyrr</strong><span class="contact-arrow" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
-        <div class="flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-            <p>© 2026 Uwais Watkins. Built with AWS, Terraform, and serverless architecture.</p>
-            <p class="text-slate-500">Live counter powered by API Gateway, Lambda, and DynamoDB.</p>
+    <footer>
+        <div class="container footer-inner">
+            <span>© 2026 Uwais Watkins</span>
+            <span>Built with AWS, Terraform, and serverless architecture.</span>
         </div>
     </footer>
 
     <script>
-        // Tab Navigation Logic
-        const inactiveButtonClass = "nav-btn rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white";
-        const activeButtonClass = "nav-btn rounded-full bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition";
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = inactiveButtonClass;
-            });
-
-            const selectedTab = document.getElementById(`tab-${tabId}`);
-            const selectedButton = document.getElementById(`btn-${tabId}`);
-
-            if (selectedTab && selectedButton) {
-                selectedTab.classList.add('active');
-                selectedButton.className = activeButtonClass;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        // Visitor Counter Logic (core functionality preserved)
         const apiURL = 'https://t9bxl7c440.execute-api.eu-north-1.amazonaws.com/counter';
 
         async function getCounter() {
+            const counter = document.getElementById('counter');
             try {
-                let response = await fetch(apiURL, {
-                    method: 'POST'
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Counter API returned ${response.status}`);
-                }
-
-                let data = await response.json();
-                document.getElementById('counter').innerText = Number(data.count).toLocaleString();
+                const response = await fetch(apiURL, { method: 'POST' });
+                if (!response.ok) throw new Error(`Counter API returned ${response.status}`);
+                const data = await response.json();
+                counter.textContent = Number(data.count).toLocaleString();
             } catch (error) {
-                console.error("Error fetching visitor count:", error);
-                document.getElementById('counter').innerText = "Unavailable";
+                console.error('Error fetching visitor count:', error);
+                counter.textContent = 'temporarily unavailable';
             }
+        }
+
+        const revealElements = document.querySelectorAll('.reveal');
+
+        if ('IntersectionObserver' in window) {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+
+            revealElements.forEach(element => revealObserver.observe(element));
+        } else {
+            revealElements.forEach(element => element.classList.add('visible'));
         }
 
         getCounter();
