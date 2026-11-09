@@ -2,7 +2,7 @@
 
 > **Production-grade serverless cloud portfolio built on AWS using Terraform, GitHub Actions, and modern cloud engineering best practices.**
 
-[🌐 Live Website](https://d1l6jcvu4zf64q.cloudfront.net/) • [🔌 Visitor Counter API](https://t9bxl7c440.execute-api.eu-north-1.amazonaws.com/counter)
+[🌐 Live Website](https://uwaiswatkins.com/) • [🔌 Visitor Counter API](https://t9bxl7c440.execute-api.eu-north-1.amazonaws.com/counter)
 
 ---
 
